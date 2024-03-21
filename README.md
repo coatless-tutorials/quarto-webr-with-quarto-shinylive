@@ -5,7 +5,7 @@ and [`{quarto-shinylive}`](https://github.com/quarto-ext/shinylive) Quarto exten
 
 ## Installation 
 
-The installation process requires install **Quarto Extensions** using **Terminal**
+The installation process requires installing **Quarto Extensions** using **Terminal**
 and the [`{shinylive}` R package](https://cran.r-project.org/web/packages/shinylive/index.html)
 R package for **Shinylive** using the **R console**.
 
