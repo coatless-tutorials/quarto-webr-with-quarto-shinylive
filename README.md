@@ -40,7 +40,7 @@ filters:
   - shinylive
 ---
 
-## {quarto-shinylive}
+## `{quarto-shinylive}`
 
 ```{shinylive-r}
 #| standalone: true
@@ -57,7 +57,7 @@ server <- function(input, output, session) {
 shinyApp(ui, server)
 ```
 
-## quarto-webr
+## `{quarto-webr}`
 
 ```{webr-r}
 print("hello quarto-webr world!")

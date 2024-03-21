@@ -2,6 +2,7 @@
 title: Pairing {quarto-shinylive} and {quarto-webr}
 format:
   html:
+    toc: true
     resources: 
       - shinylive-sw.js
 engine: knitr
@@ -59,7 +60,7 @@ cell.
 ### Interactive
 
 ```{webr-r}
-print("hello quarto-webr world!")
+print("Hello {quarto-webr} world!")
 ```
 
 ### Non-interactive
@@ -130,8 +131,18 @@ shinyApp(ui, server)
 
 ## `{quarto-webr}`
 
+
+### Interactive
+
 ```{webr-r}
-print("hello quarto-webr world!")
+print("Hello {quarto-webr} world!")
+```
+
+### Non-interactive
+
+```{webr-r}
+#| context: output
+cat("And, this is a non-interactive cell", fill = TRUE)
 ```
 
 ````
