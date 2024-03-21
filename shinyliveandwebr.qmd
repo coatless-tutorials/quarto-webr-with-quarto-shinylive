@@ -1,0 +1,56 @@
+---
+title: Pairing {quarto-shinylive} and {quarto-webr}
+format:
+  html:
+    resources: 
+      - shinylive-sw.js
+engine: knitr
+filters:
+  - webr
+  - shinylive
+---
+
+## quarto-shinylive
+
+Example of a Shinylive application inside of the Quarto document. 
+
+```{shinylive-r}
+#| standalone: true
+library(shiny)
+library(bslib)
+library(shinylive)
+
+is_shinylive <- function() { R.Version()$arch == "wasm32"}
+
+ui <- page_fillable(
+    class = "d-flex flex-column text-center align-items-center justify-content-center",
+    h1("Is this app running in shinylive?"),
+    textOutput("in_shinylive", container = \(...) p(..., class="fs-2 fw-bold"))
+)
+
+server <- function(input, output, session) {
+    output$in_shinylive <- renderText({
+        if (is_shinylive()) "Yes." else "No."
+    })
+}
+
+shinyApp(ui, server)
+```
+
+## quarto-webr
+
+Example of the {quarto-webr} Extension working alongside a {quarto-shinylive}
+cell. 
+
+### Interactive
+
+```{webr-r}
+print("hello quarto-webr world!")
+```
+
+### Non-interactive
+
+```{webr-r}
+#| context: output
+cat("And, this is a non-interactive cell", fill = TRUE)
+```
