@@ -1,0 +1,137 @@
+---
+title: Pairing {quarto-shinylive} and {quarto-webr}
+format:
+  html:
+    resources: 
+      - shinylive-sw.js
+engine: knitr
+filters:
+  - webr
+  - shinylive
+---
+
+The document is split into two sections. The first section showcases the active
+code cells and the second portion of the document focuses on re-creating
+this document.
+
+# Working Demo
+
+Let's take a quick look at the technologies in action.
+
+:::{.callout-important}
+Shinylive applications are unable to share their contents with each other or
+`{quarto-webr}`. Thus, variables defined in a Shiny app or inside of a
+`{webr-r}` code cell are only available in the defining technology.
+:::
+
+## `{quarto-shinylive}`
+
+Example of a Shinylive application inside of the Quarto document. 
+
+```{shinylive-r}
+#| standalone: true
+library(shiny)
+library(bslib)
+library(shinylive)
+
+is_shinylive <- function() { R.Version()$arch == "wasm32"}
+
+ui <- page_fillable(
+    class = "d-flex flex-column text-center align-items-center justify-content-center",
+    h1("Is this app running in shinylive?"),
+    textOutput("in_shinylive", container = \(...) p(..., class="fs-2 fw-bold"))
+)
+
+server <- function(input, output, session) {
+    output$in_shinylive <- renderText({
+        if (is_shinylive()) "Yes." else "No."
+    })
+}
+
+shinyApp(ui, server)
+```
+
+## `{quarto-webr}`
+
+Example of the {quarto-webr} Extension working alongside a {quarto-shinylive}
+cell. 
+
+### Interactive
+
+```{webr-r}
+print("hello quarto-webr world!")
+```
+
+### Non-interactive
+
+```{webr-r}
+#| context: output
+cat("And, this is a non-interactive cell", fill = TRUE)
+```
+
+# Walkthrough
+
+In this section, we go step-by-step to create portions of the above code cell
+demo.
+
+## Installation 
+
+Please make sure to create a Quarto project and, then, install each extension inside of Terminal:
+
+```sh
+# For shinylive
+quarto add quarto-ext/shinylive
+
+# For quarto-webr
+quarto add coatless/quarto-webr
+```
+
+
+Both extensions should be found in `_extensions` within the project directory. If not, please double-check your working project directory.
+
+## Quarto Document
+
+From there, please setup a Quarto document (`.qmd`) that contains:
+
+1. the Shiny app source inside of a code cell denoted with `{shinylive-r}`; and,
+2. the code you want webr to use with `{webr-r}`.
+
+Here is an example skeleton Quarto document that has both code cells present: 
+
+````md
+---
+title: Pairing {quarto-shinylive} and {quarto-webr}
+format:
+  html:
+    resources: 
+      - shinylive-sw.js
+engine: knitr
+filters:
+  - webr
+  - shinylive
+---
+
+## `{quarto-shinylive}`
+
+```{shinylive-r}
+#| standalone: true
+library(shiny)
+
+ui <- fluidPage(
+   titlePanel("Hello Shiny!")
+)
+
+server <- function(input, output, session) {
+  # code
+}
+
+shinyApp(ui, server)
+```
+
+## `{quarto-webr}`
+
+```{webr-r}
+print("hello quarto-webr world!")
+```
+
+````
