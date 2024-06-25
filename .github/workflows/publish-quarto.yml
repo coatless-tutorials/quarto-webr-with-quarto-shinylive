@@ -50,7 +50,7 @@ jobs:
         shell: bash
         run: |
           quarto add --no-prompt quarto-ext/shinylive
-          quarto add --no-prompt coatless/quarto-webr@0.4.0
+          quarto add --no-prompt coatless/quarto-webr@0.4.2
 
       # Render the Quarto file
       - name: "Render working directory"
